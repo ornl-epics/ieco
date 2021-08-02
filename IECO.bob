@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<display version="2.0.0">
+  <name>IECO Magnet</name>
+  <widget type="label" version="2.0.0">
+    <name>Label_13</name>
+    <text>Actual Current</text>
+    <x>152</x>
+    <y>173</y>
+    <width>90</width>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_7</name>
+    <pv_name>$(S):ReadCurrent</pv_name>
+    <x>261</x>
+    <y>173</y>
+    <width>188</width>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_19</name>
+    <text>Calculated Field Read</text>
+    <x>31</x>
+    <y>111</y>
+    <width>219</width>
+    <height>17</height>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_21</name>
+    <pv_name>$(S):ActualField</pv_name>
+    <x>261</x>
+    <y>111</y>
+    <width>188</width>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_20</name>
+    <text>Calculated Current from FieldSP</text>
+    <x>31</x>
+    <y>140</y>
+    <width>219</width>
+    <height>17</height>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_21</name>
+    <text>Field SP</text>
+    <x>31</x>
+    <y>37</y>
+    <width>219</width>
+    <height>17</height>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_22</name>
+    <text>PoleSelector</text>
+    <x>31</x>
+    <y>78</y>
+    <width>219</width>
+    <height>17</height>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="picture" version="2.0.0">
+    <name>Picture</name>
+    <x>581</x>
+    <y>61</y>
+    <width>1</width>
+    <height>1</height>
+  </widget>
+  <widget type="led" version="2.0.0">
+    <name>LED_1</name>
+    <pv_name>BL4A:SE:IECO:GlobalAlarm</pv_name>
+    <x>263</x>
+    <off_color>
+      <color name="OK" red="0" green="255" blue="0">
+      </color>
+    </off_color>
+    <on_color>
+      <color name="MAJOR" red="255" green="0" blue="0">
+      </color>
+    </on_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_26</name>
+    <text>Global Alarm</text>
+    <x>110</x>
+    <width>140</width>
+    <height>17</height>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="combo" version="2.0.0">
+    <name>Combo Box</name>
+    <pv_name>$(S):PoleSelector</pv_name>
+    <x>261</x>
+    <y>78</y>
+    <width>178</width>
+    <height>20</height>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>Text Entry_3</name>
+    <pv_name>$(S):FieldSP</pv_name>
+    <x>261</x>
+    <y>37</y>
+    <width>178</width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_27</name>
+    <pv_name>$(S):SelCurrent</pv_name>
+    <x>261</x>
+    <y>140</y>
+    <width>188</width>
+  </widget>
+  <widget type="combo" version="2.0.0">
+    <name>Combo Box_1</name>
+    <pv_name>$(S):AlarmDisable</pv_name>
+    <x>300</x>
+    <width>140</width>
+    <height>20</height>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_1</name>
+    <actions>
+      <action type="open_display">
+        <file>IECODetails.bob</file>
+        <target>replace</target>
+        <description>To IECO Details</description>
+      </action>
+    </actions>
+    <width>152</width>
+    <height>20</height>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+</display>

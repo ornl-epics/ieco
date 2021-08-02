@@ -1,0 +1,465 @@
+############################################################################
+#ICP Configuration  +-5V = 5, +-10V =3
+############################################################################
+record(ao, "$(S):$(TA):$(DN):SetVRange") {
+	field(DESC, "Set icp to +-10 for I control")
+        field(VAL, "3")
+        field(OUT, "$(S):$(TA):$(DN):VOut0:TypeReq.VAL CA")
+        field(PINI, "YES")
+}
+
+############################################################################
+##Reads
+############################################################################
+record (calc, "$(S):$(TA):$(DN):ReadVoltage") {
+        field(DESC, "Calculate Voltage from ICP ")
+        field(INPA, "$(S):$(TA):$(DN):VIn0 CP")
+        field(CALC, "A/1.17647")
+        info(archive, "Monitor, 00:00:01, VAL")
+        field(PREC, "4")
+        field(EGU, "V")
+}
+
+###########################################################
+record (calc, "$(S):$(TA):$(DN):ReadTemperature") {
+        field(DESC, "Calculate Temperature from ICP ")
+        field(INPA, "$(S):$(TA):$(DN):VIn2 CP")
+        field(CALC, "A/1")
+        info(archive, "Monitor, 00:00:01, VAL")
+        field(PREC, "4")
+        field(EGU, "F")
+}
+###########################################################
+record (calc, "$(S):$(TA):$(DN):ReadField") {
+        field(DESC, "Calculate Field from ICP ")
+        field(INPA, "$(S):$(TA):$(DN):VIn3 CP")
+        field(CALC, "A/1")
+        info(archive, "Monitor, 00:00:01, VAL")
+        field(PREC, "4")
+        field(EGU, "T")
+}
+
+
+############################################################
+#Calulations brake point table added
+#Software does not required direct current SP.
+#Tables are available for ftoi and itof
+############################################################
+record(ao, "$(S):$(TA):$(DN):FieldSP") {
+   	field(DESC, "Set the Field Convert to I")
+   	field(PREC, "4")
+   	field(FLNK, "$(S):$(TA):$(DN):FormatFieldSP")
+	info(archive, "Monitor, 00:00:01, VAL")
+        info(autosaveFields, "VAL")
+        field(EGU, "T")
+}	
+
+#set limits from pole selector on the SP
+record(seq, "$(S):$(TA):$(DN):SetFieldDRVH") {
+        field(DESC, "Select Field Drive High")
+        field(LNK1, "$(S):$(TA):$(DN):FieldSP.DRVH PP NMS")
+        field(DOL1, "0.56")
+        field(LNK2, "$(S):$(TA):$(DN):FieldSP.DRVH PP NMS")
+        field(DOL2, "3.77")  
+        field(LNK3, "$(S):$(TA):$(DN):FieldSP.DRVH PP NMS")
+        field(DOL3, "2.98")
+        field(LNK4, "$(S):$(TA):$(DN):FieldSP.DRVH PP NMS")
+        field(DOL4, "2.40")
+        field(LNK5, "$(S):$(TA):$(DN):FieldSP.DRVH PP NMS")
+        field(DOL5, "2.603")
+        field(LNK6, "$(S):$(TA):$(DN):FieldSP.DRVH PP NMS")
+        field(DOL6, "1.154")
+        field(LNK7, "$(S):$(TA):$(DN):FieldSP.DRVH PP NMS")
+        field(DOL7, "1.24")
+        field(SELM, "Specified")
+        field(SELL, "$(S):$(TA):$(DN):PoleSelector.RVAL CP NMS")
+}
+
+record(seq, "$(S):$(TA):$(DN):SetFieldDRVL") {
+        field(DESC, "Select Field Drive High")
+        field(LNK1, "$(S):$(TA):$(DN):FieldSP.DRVL PP NMS")
+        field(DOL1, "-0.56")
+        field(LNK2, "$(S):$(TA):$(DN):FieldSP.DRVL PP NMS")
+        field(DOL2, "-3.77") 
+        field(LNK3, "$(S):$(TA):$(DN):FieldSP.DRVL PP NMS")
+        field(DOL3, "-2.956")
+        field(LNK4, "$(S):$(TA):$(DN):FieldSP.DRVL PP NMS")
+        field(DOL4, "-2.38")
+        field(LNK5, "$(S):$(TA):$(DN):FieldSP.DRVL PP NMS")
+        field(DOL5, "-2.582")
+        field(LNK6, "$(S):$(TA):$(DN):FieldSP.DRVL PP NMS")
+        field(DOL6, "-1.151")
+        field(LNK7, "$(S):$(TA):$(DN):FieldSP.DRVL PP NMS")
+        field(DOL7, "-1.240")
+        field(SELM, "Specified")
+        field(SELL, "$(S):$(TA):$(DN):PoleSelector.RVAL CP NMS")
+}
+
+#RVAL is data type long so we need to multiply 
+record(calcout, "$(S):$(TA):$(DN):FormatFieldSP") {
+   	field(DESC, "Format SP to work with breatable")
+   	field(INPA, "$(S):$(TA):$(DN):FieldSP.VAL")
+   	field(CALC, "A*1000000")
+   	field(OUT, "$(S):$(TA):$(DN):FieldSPRaw.VAL CA") 	
+        field(ADEL,"0.0001")
+        info(archive, "Monitor, 00:00:01, VAL")
+}
+
+#multiplied value VAL=RVAL 
+record(ao, "$(S):$(TA):$(DN):FieldSPRaw") {
+   	field(DESC, "Set the Field Convert to I")
+   	field(FLNK, "$(S):$(TA):$(DN):PoleSelector")
+   	field(PREC, "4")
+   	field(DTYP, "Raw Soft Channel")
+        field(ADEL,"0.0001")
+        info(archive, "Monitor, 00:00:01, VAL")
+}
+
+
+
+record(mbbo, "$(S):$(TA):$(DN):PoleSelector")
+{
+   	field(DESC, "Pole Selector")
+   	field(ZRVL, "1")					#Start at one becasue of the next seq
+   	field(ONVL, "2")
+  	field(TWVL, "3")
+   	field(THVL, "4")
+   	field(FRVL, "5")
+   	field(FVVL, "6")
+   	field(SXVL, "7")
+   	field(ZRST, "No Poles")
+   	field(ONST, "5/10")
+   	field(TWST, "10/25")
+   	field(THST, "15/70")
+   	field(FRST, "15/25")
+   	field(FVST, "50/75")
+   	field(SXST, "46/50")
+   	field(FLNK, "$(S):$(TA):$(DN):PoleSearchFtoI")
+        info(archive, "Monitor, 00:00:01, VAL")
+        info(autosaveFields, "VAL")
+}
+
+record(seq, "$(S):$(TA):$(DN):PoleSearchFtoI")
+{
+  	field(DESC, "Select table ai record")
+  	field(SELM, "Specified")				#chose what link to trigger from SELL
+  	field(SELL, "$(S):$(TA):$(DN):PoleSelector.RVAL")     #using rval because of the offset on PoleSelector
+  	field(LNK1, "$(S):$(TA):$(DN):FtoINoPoles.PROC")
+  	field(LNK2, "$(S):$(TA):$(DN):FtoIfiveten.PROC")
+  	field(LNK3, "$(S):$(TA):$(DN):FtoItentwentyfive.PROC")
+  	field(LNK4, "$(S):$(TA):$(DN):FtoIfifteenseventy.PROC")
+  	field(LNK5, "$(S):$(TA):$(DN):FtoIfifteentwentyfive.PROC")
+  	field(LNK6, "$(S):$(TA):$(DN):FtoIfiftyseventyfive.PROC")
+  	field(LNK7, "$(S):$(TA):$(DN):FtoIfortysixfifty.PROC")
+  	field(FLNK, "$(S):$(TA):$(DN):SelCurrent")
+        info(archive, "Monitor, 00:00:01, VAL")
+
+}
+
+
+record(ai, "$(S):$(TA):$(DN):FtoINoPoles") {
+  	field(DESC, "F to I no Poles")
+  	field(LINR, "FtoINoPoles")	
+  	field(INP, "$(S):$(TA):$(DN):FieldSPRaw.RVAL")
+  	field(DTYP, "Raw Soft Channel")	
+  	field(PREC, "4")
+        field(ADEL,"0.0001")
+        info(archive, "Monitor, 00:00:01, VAL")
+        field(EGU, "A NP")
+}
+
+record(ai, "$(S):$(TA):$(DN):FtoIfiveten") {
+  	field(DESC, "F to I 5/10")
+  	field(LINR, "FtoIfiveten")
+  	field(INP, "$(S):$(TA):$(DN):FieldSPRaw.RVAL")
+  	field(DTYP, "Raw Soft Channel")
+  	field(PREC, "4")
+        field(ADEL,"0.0001")
+        info(archive, "Monitor, 00:00:01, VAL")
+        field(EGU, "A 5/10")
+
+}
+
+record(ai, "$(S):$(TA):$(DN):FtoItentwentyfive") {
+  	field(DESC, "F to I 10/25")
+  	field(LINR, "FtoItentwentyfive") 
+  	field(INP, "$(S):$(TA):$(DN):FieldSPRaw.RVAL")
+  	field(DTYP, "Raw Soft Channel")
+  	field(PREC, "4")
+        field(ADEL,"0.0001")
+        info(archive, "Monitor, 00:00:01, VAL")
+        field(EGU, "A 10/25")
+
+}
+
+
+record(ai, "$(S):$(TA):$(DN):FtoIfifteenseventy") {
+  	field(DESC, "F to I 15/70")
+  	field(LINR, "FtoIfifteenseventy")
+  	field(INP, "$(S):$(TA):$(DN):FieldSPRaw.RVAL")
+  	field(DTYP, "Raw Soft Channel")
+  	field(PREC, "4")
+        field(ADEL,"0.0001")
+        info(archive, "Monitor, 00:00:01, VAL")
+        field(EGU, "A 15/70")
+
+}
+
+record(ai, "$(S):$(TA):$(DN):FtoIfifteentwentyfive") {
+  	field(DESC, "F to I 15/25")
+  	field(LINR, "FtoIfifteentwentyfive")
+  	field(INP, "$(S):$(TA):$(DN):FieldSPRaw.RVAL")
+  	field(DTYP, "Raw Soft Channel")
+  	field(PREC, "4")
+        field(ADEL,"0.0001")
+        info(archive, "Monitor, 00:00:01, VAL")
+        field(EGU, "A 15/25")
+
+}
+
+record(ai, "$(S):$(TA):$(DN):FtoIfiftyseventyfive") {
+  	field(DESC, "F to I 50/75")
+  	field(LINR, "FtoIfiftyseventyfive")
+  	field(INP, "$(S):$(TA):$(DN):FieldSPRaw.RVAL")
+  	field(DTYP, "Raw Soft Channel")
+  	field(PREC, "4")
+        field(ADEL,"0.0001")
+        info(archive, "Monitor, 00:00:01, VAL")
+        field(EGU, "A 50/75")
+
+}
+
+
+record(ai, "$(S):$(TA):$(DN):FtoIfortysixfifty") {
+  	field(DESC, "F to I 46/50")
+  	field(LINR, "FtoIfortysixfifty")
+  	field(INP, "$(S):$(TA):$(DN):FieldSPRaw.RVAL")
+  	field(DTYP, "Raw Soft Channel")
+  	field(PREC, "4")
+        field(ADEL,"0.0001")
+        info(archive, "Monitor, 00:00:01, VAL")
+        field(EGU, "A 46/50")
+
+}
+
+record(sel, "$(S):$(TA):$(DN):SelCurrent") {
+  	field(DESC, "Select current to send")
+  	field(INPA, "$(S):$(TA):$(DN):FtoINoPoles")
+  	field(INPB, "$(S):$(TA):$(DN):FtoIfiveten")
+  	field(INPC, "$(S):$(TA):$(DN):FtoItentwentyfive")
+  	field(INPD, "$(S):$(TA):$(DN):FtoIfifteenseventy")
+  	field(INPE, "$(S):$(TA):$(DN):FtoIfifteentwentyfive")
+  	field(INPF, "$(S):$(TA):$(DN):FtoIfiftyseventyfive")
+  	field(INPG, "$(S):$(TA):$(DN):FtoIfortysixfifty")
+  	field(NVL, "$(S):$(TA):$(DN):PoleSelector")
+  	field(SELM, "Specified")
+  	field(PREC, "4")
+        info(archive, "Monitor, 00:00:01, VAL")
+        field(EGU, "A")
+
+}
+
+#direct commands
+#set current derived from field on Hardware
+record (calcout, "$(S):$(TA):$(DN):SetHrdwrCurrent") {
+        field(DESC, "Send Calculated Current to ICP")
+        field(INPA, "$(S):$(TA):$(DN):SelCurrent CP")
+        field(CALC, "A*0.147")    #Multiplier for voltage to current conversion
+        field(OUT, "$(S):$(TA):$(DN):VOut0 CA")
+        info(archive, "Monitor, 00:00:01, VAL")
+}	
+
+
+#####################################################
+#Output Current CHN to Field Conversion Section
+#####################################################
+#get the current from hardware and convert.
+
+record (calc, "$(S):$(TA):$(DN):ReadCurrent") {
+        field(DESC, "Calculate Current from ICP ")
+        field(INPA, "$(S):$(TA):$(DN):VIn1 CP")
+        field(CALC, "(A/0.142857)")
+        info(archive, "Monitor, 00:00:01, VAL")
+        field(PREC, "4")
+        field(EGU, "A")
+        field(FLNK, "$(S):$(TA):$(DN):FormatIOutput")
+}
+
+record(calcout, "$(S):$(TA):$(DN):FormatIOutput") {
+   	field(DESC, "Format Output I to work with table")
+        field(INPA, "$(S):$(TA):$(DN):ReadCurrent.VAL")	#hardware readback
+   	field(CALC, "A*1000000")
+   	field(OUT, "$(S):$(TA):$(DN):IOutputRaw.VAL CA NMS")
+        field(ADEL,"0.0001")
+        info(archive, "Monitor, 00:00:01, VAL")
+}
+
+#multiplied value VAL=RVAL 
+record(ao, "$(S):$(TA):$(DN):IOutputRaw") {
+    	field(DESC, "Convert I to Field  ")
+    	field(FLNK, "$(S):$(TA):$(DN):PoleSearchItoF.PROC")
+    	field(PREC, "4")
+    	field(DTYP, "Raw Soft Channel")
+        field(ADEL,"0.0001")
+        info(archive, "Monitor, 00:00:01, VAL")
+        field(ASLO, "1")
+}
+
+record(seq, "$(S):$(TA):$(DN):PoleSearchItoF")
+{
+  	field(DESC, "Select table ai record")
+  	field(SELM, "Specified")                              #chose what link to trigger from SELL
+  	field(SELL, "$(S):$(TA):$(DN):PoleSelector.RVAL CP")     #using rval because of the offset on PoleSelector CP for on change
+  	field(LNK1, "$(S):$(TA):$(DN):ItoFNoPoles.PROC")
+  	field(LNK2, "$(S):$(TA):$(DN):ItoFfiveten.PROC")
+  	field(LNK3, "$(S):$(TA):$(DN):ItoFtentwentyfive.PROC")
+  	field(LNK4, "$(S):$(TA):$(DN):ItoFfifteenseventy.PROC")
+  	field(LNK5, "$(S):$(TA):$(DN):ItoFfifteentwentyfive.PROC")
+  	field(LNK6, "$(S):$(TA):$(DN):ItoFfiftyseventyfive.PROC")
+  	field(LNK7, "$(S):$(TA):$(DN):ItoFfortysixfifty.PROC")
+#  	field(FLNK, "$(S):$(TA):$(DN):SelField.PROC")
+        info(archive, "Monitor, 00:00:01, VAL")
+}
+
+record(ai, "$(S):$(TA):$(DN):ItoFNoPoles") {
+  	field(DESC, "I to F No Poles")
+  	field(LINR, "ItoFNoPoles")
+  	field(INP, "$(S):$(TA):$(DN):IOutputRaw.RVAL")
+  	field(DTYP, "Raw Soft Channel")
+	field(PREC, "4")
+        field(ADEL,"0.0001")
+        info(archive, "Monitor, 00:00:01, VAL")
+        field(EGU, "T NP")
+
+}
+
+record(ai, "$(S):$(TA):$(DN):ItoFfiveten") {
+  	field(DESC, "F to I 5/10")
+  	field(LINR, "ItoFfiveten")
+  	field(INP, "$(S):$(TA):$(DN):IOutputRaw.RVAL")
+  	field(DTYP, "Raw Soft Channel")
+  	field(PREC, "4")
+        field(ADEL,"0.0001")
+        info(archive, "Monitor, 00:00:01, VAL")
+        field(EGU, "T 5/10")
+
+}
+
+record(ai, "$(S):$(TA):$(DN):ItoFtentwentyfive") {
+  	field(DESC, "F to I 10/25")
+  	field(LINR, "ItoFtentwentyfive")
+  	field(INP, "$(S):$(TA):$(DN):IOutputRaw.RVAL")
+  	field(DTYP, "Raw Soft Channel")
+  	field(PREC, "4")
+        field(ADEL,"0.0001")
+        info(archive, "Monitor, 00:00:01, VAL")
+        field(EGU, "T 10/25")
+
+}
+
+
+record(ai, "$(S):$(TA):$(DN):ItoFfifteenseventy") {
+  	field(DESC, "F to I 15/70")
+  	field(LINR, "ItoFfifteenseventy")
+  	field(INP, "$(S):$(TA):$(DN):IOutputRaw.RVAL")
+  	field(DTYP, "Raw Soft Channel")
+  	field(PREC, "4")
+        field(ADEL,"0.0001")
+        info(archive, "Monitor, 00:00:01, VAL")
+        field(EGU, "T 15/70")
+
+}
+
+record(ai, "$(S):$(TA):$(DN):ItoFfifteentwentyfive") {
+  	field(DESC, "F to I 15/25")
+  	field(LINR, "ItoFfifteentwentyfive")
+  	field(INP, "$(S):$(TA):$(DN):IOutputRaw.RVAL")
+  	field(DTYP, "Raw Soft Channel")
+  	field(PREC, "4")
+        field(ADEL,"0.0001")
+        info(archive, "Monitor, 00:00:01, VAL")
+        field(EGU, "T 15/25")
+
+}
+
+record(ai, "$(S):$(TA):$(DN):ItoFfiftyseventyfive") {
+  	field(DESC, "F to I 50/75")
+  	field(LINR, "ItoFfiftyseventyfive")
+  	field(INP, "$(S):$(TA):$(DN):IOutputRaw.RVAL")
+  	field(DTYP, "Raw Soft Channel")
+  	field(PREC, "4")
+        field(ADEL,"0.0001")
+        info(archive, "Monitor, 00:00:01, VAL")
+        field(EGU, "T 50/75")
+
+}
+
+
+record(ai, "$(S):$(TA):$(DN):ItoFfortysixfifty") {
+  	field(DESC, "F to I 46/50")
+  	field(LINR, "ItoFfortysixfifty")
+  	field(INP, "$(S):$(TA):$(DN):IOutputRaw.RVAL")
+  	field(DTYP, "Raw Soft Channel")
+  	field(PREC, "4")
+        field(ADEL,"0.0001")
+        info(archive, "Monitor, 00:00:01, VAL")
+        field(EGU, "T 46/50")
+
+}
+
+
+
+record(sel, "$(S):$(TA):$(DN):ActualField") {
+  	field(DESC, "Convert ItoF from table interpolation")
+  	field(INPA, "$(S):$(TA):$(DN):ItoFNoPoles")
+  	field(INPB, "$(S):$(TA):$(DN):ItoFfiveten")
+  	field(INPC, "$(S):$(TA):$(DN):ItoFtentwentyfive")
+  	field(INPD, "$(S):$(TA):$(DN):ItoFfifteenseventy")
+  	field(INPE, "$(S):$(TA):$(DN):ItoFfifteentwentyfive")
+  	field(INPF, "$(S):$(TA):$(DN):ItoFfiftyseventyfive")
+  	field(INPG, "$(S):$(TA):$(DN):ItoFfortysixfifty")
+  	field(NVL, "$(S):$(TA):$(DN):PoleSelector CPP")
+  	field(SELM, "Specified")
+  	field(PREC, "4")
+        info(archive, "Monitor, 00:00:01, VAL")
+        field(FLNK, "$(S):$(TA):$(DN):ActualFieldAbs")
+        field(SCAN, "1 second")
+        field(EGU, "T")
+
+}
+
+
+record(calc, "$(S):$(TA):$(DN):ActualFieldAbs") {
+        field(DESC, "Actual field absolute")
+        field(INPA, "$(S):$(TA):$(DN):ActualField")
+        field(CALC, "A")
+        info(archive, "Monitor, 00:00:01, VAL")
+}
+
+
+
+
+######################################################################
+#Alarms
+######################################################################
+record(bo, "$(S):$(TA):$(DN):AlarmDisable")
+{
+    field(DESC, "Disable Global Alarm")
+    info(archive, "Monitor, 00:01:00")
+    field (ZNAM, "AlarmDisabled")
+    field (ONAM, "AlarmEnabled")
+    field (ZSV, "MINOR")
+    field(PINI, "YES")
+    field(VAL, "1")
+}
+
+record(calc, "$(S):$(TA):$(DN):GlobalAlarm"){
+   field(INPA, "$(S):$(TA):$(DN):AlarmDisable CP NMS")
+   field(INPB, "$(S):$(TA):$(DN):$(BIT) CP MS")
+   info(archive, "Monitor, 00:01:00")
+   field(CALC, "A&(!B)")
+   field(SCAN, "1 second")
+   field(HIHI, "1")
+   field(HHSV, "MAJOR")
+}
+

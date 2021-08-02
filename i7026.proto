@@ -1,0 +1,114 @@
+#
+# There is no model i7026; only the m7026 is marketed. this uses the dcon
+# protocol with the m7026 module.
+#
+##################################################
+# General Settings
+##################################################
+
+Terminator = CR;
+ReplyTimeout = 2000;
+locktimeout = 5000;
+readtimeout  = 1000;
+extrainput   = Ignore;
+
+###################################################
+# Get functions
+###################################################
+
+# Read an analog input from 7026 module
+# #AAN, where AA is the module address and N is 1-digit
+# input channel.  Use with AI
+getAI {
+   out "#\$1\$2";
+   in ">%f";
+}
+
+# Scan this one periodically to read all values at once, but just use the first.
+getAI0 {
+   out "#\$1";
+   in ">%f%*f%*f%*f%*f%*f";
+}
+# Records using these should use I/O Intr scanning.
+getAI1 {
+   in ">%*f%f%*f%*f%*f%*f";
+}
+getAI2 {
+   in ">%*f%*f%f%*f%*f%*f";
+}
+getAI3 {
+   in ">%*f%*f%*f%f%*f%*f";
+}
+getAI4 {
+   in ">%*f%*f%*f%*f%f%*f";
+}
+getAI5 {
+   in ">%*f%*f%*f%*f%*f%f";
+}
+
+# Read digital input and output channels from 7026 module
+# command @AADI
+# response !AA0OOII. "OO" is 2 hex digits 3 output setpoints, "II" 3 inputs.
+# Use with mbbiDirect
+getDIO {
+   out "@\$1DI";
+   in "!\$10%4X";
+}
+
+# read analog input type
+# $1 = address, $2= input number; PV input is type.
+getAIType {
+   out "$\$18C\$2";
+   in "!\$1C\$2R%X";
+}
+
+getAOType {
+   out "$\$19\$2";
+   in "!\$1%(\$3:TypeNum)1d%(\$3:SRNum)1d";
+}
+
+###################################################
+# Set functions
+###################################################
+
+
+
+# Set the digital out: @AADO00 (AA=addr, 00=2 digit of hex)
+# Use with mbboDirect
+setDO {
+  out "@\$1DO%02X" ;
+  in  "!\$1";
+}
+
+# Set resolution of all analog input channels. zero sets to 12 bit, 1 to 16 bit.
+# Tests show 12 bit updates at about 10 Hz and 16 bit updates at about 2 Hz.
+# Works with bo record.
+setHiRes {
+   out "\%\$1\$1%{000A20|000A00}";
+   in "!\$1";
+}
+
+# write an analog output to a 7026 module
+# #AAN, where AA is the module address and N is 1-digit 0-based
+# output channel.
+setAO {
+   out "#\$1\$2%+07.3f";
+   in ">";
+}
+
+# set analog input type
+# $1 = address, $2= input number; PV val is type.
+setAIType {
+   out "$\$17C\$2R%02X";
+   in "!\$1";
+}
+
+# set analog output type
+# $1 = address, $2= output number; PV val is type.
+# 0: 0-20mA, 1: 4-20mA, 2: 0-10V, 3: -/+10V, 4: 0-5V, 5: -/+5V
+# sets slew rate to 0 (immediate)
+setAOType {
+   out "$\$19\$2%(\$3:TypeReq)d%(\$3:SRReq)d";
+   in "!\$1";
+}
+

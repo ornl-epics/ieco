@@ -1,0 +1,2480 @@
+# Of the 16 bits read, 6 are used.  bits 0, 1, and 2 are inputs, bits 8, 9, 10
+# are outputs.
+
+record(mbbiDirect, "$(s,undefined):$(ta,undefined):$(d,undefined):DIO") { 
+   field(DTYP, "stream")
+   field(INP, "@i7026.proto getDIO(01) $(A7026,undefined) 0")
+   field(SCAN, ".1 second")
+}
+
+record(bo, "$(s,undefined):$(ta,undefined):$(d,undefined):DI0:AlarmEna") {
+   field(ZNAM, "Disabled")
+   field(ONAM, "Enabled")
+   info(autosaveFields, "VAL")
+}
+
+record(mbbo, "$(s,undefined):$(ta,undefined):$(d,undefined):DI0:AlarmVal") {
+   field(ZRST, "None")
+   field(ONST, "Zero")
+   field(TWST, "One")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):DI0:AlarmMask") 
+   info(autosaveFields, "VAL")
+}
+
+record(calc, "$(s,undefined):$(ta,undefined):$(d,undefined):DI0:AlarmMask") {
+   field(INPA, "$(s,undefined):$(ta,undefined):$(d,undefined):DI0:AlarmVal")
+   field(CALC, "A==0?3:A==1?6:9")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):DI0:AlarmSet")
+}
+
+record(seq, "$(s,undefined):$(ta,undefined):$(d,undefined):DI0:AlarmSet") {
+   field(SELM, "Mask")
+   field(SELL, "$(s,undefined):$(ta,undefined):$(d,undefined):DI0:AlarmMask")
+   field(DO1, "0")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):DI0.ZSV PP")
+   field(DO2, "0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):DI0.OSV PP")
+   field(DO3, "2")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):DI0.ZSV PP")
+   field(DO4, "2")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):DI0.OSV PP")
+}
+
+record(bi, "$(s,undefined):$(ta,undefined):$(d,undefined):DI0") {
+   field(INP, "$(s,undefined):$(ta,undefined):$(d,undefined):DIO.B0 CPP MS")
+   info(archive, "Scan, 00:00:01, VAL")
+   info(autosaveFields, "OSV ZSV")
+}
+
+# convert alarm conditions to 0/1, where 1 is alarm. Conditional on alarmEna.
+record(calc, "$(s,undefined):$(ta,undefined):$(d,undefined):DI0:Alarm") {
+   field(INPA, "$(s,undefined):$(ta,undefined):$(d,undefined):DI0.SEVR CPP NMS")
+   field(INPB, "$(s,undefined):$(ta,undefined):$(d,undefined):DI0:AlarmEna CPP NMS")
+   field(CALC, "B&&A>0.5")
+   field(HIHI, "0.5")
+   field(HHSV, "MAJOR")
+}
+
+record(bo, "$(s,undefined):$(ta,undefined):$(d,undefined):DI1:AlarmEna") {
+   field(ZNAM, "Disabled")
+   field(ONAM, "Enabled")
+   info(autosaveFields, "VAL")
+}
+
+record(mbbo, "$(s,undefined):$(ta,undefined):$(d,undefined):DI1:AlarmVal") {
+   field(ZRST, "None")
+   field(ONST, "Zero")
+   field(TWST, "One")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):DI1:AlarmMask") 
+   info(autosaveFields, "VAL")
+}
+
+record(calc, "$(s,undefined):$(ta,undefined):$(d,undefined):DI1:AlarmMask") {
+   field(INPA, "$(s,undefined):$(ta,undefined):$(d,undefined):DI1:AlarmVal")
+   field(CALC, "A==0?3:A==1?6:9")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):DI1:AlarmSet")
+}
+
+record(seq, "$(s,undefined):$(ta,undefined):$(d,undefined):DI1:AlarmSet") {
+   field(SELM, "Mask")
+   field(SELL, "$(s,undefined):$(ta,undefined):$(d,undefined):DI1:AlarmMask")
+   field(DO1, "0")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):DI1.ZSV PP")
+   field(DO2, "0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):DI1.OSV PP")
+   field(DO3, "2")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):DI1.ZSV PP")
+   field(DO4, "2")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):DI1.OSV PP")
+}
+
+record(bi, "$(s,undefined):$(ta,undefined):$(d,undefined):DI1") {
+   field(INP, "$(s,undefined):$(ta,undefined):$(d,undefined):DIO.B1 CPP MS")
+   info(archive, "Scan, 00:00:01, VAL")
+   info(autosaveFields, "OSV ZSV")
+}
+
+# convert alarm conditions to 0/1, where 1 is alarm. Conditional on alarmEna.
+record(calc, "$(s,undefined):$(ta,undefined):$(d,undefined):DI1:Alarm") {
+   field(INPA, "$(s,undefined):$(ta,undefined):$(d,undefined):DI1.SEVR CPP NMS")
+   field(INPB, "$(s,undefined):$(ta,undefined):$(d,undefined):DI1:AlarmEna CPP NMS")
+   field(CALC, "B&&A>0.5")
+   field(HIHI, "0.5")
+   field(HHSV, "MAJOR")
+}
+
+record(bo, "$(s,undefined):$(ta,undefined):$(d,undefined):DI2:AlarmEna") {
+   field(ZNAM, "Disabled")
+   field(ONAM, "Enabled")
+   info(autosaveFields, "VAL")
+}
+
+record(mbbo, "$(s,undefined):$(ta,undefined):$(d,undefined):DI2:AlarmVal") {
+   field(ZRST, "None")
+   field(ONST, "Zero")
+   field(TWST, "One")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):DI2:AlarmMask") 
+   info(autosaveFields, "VAL")
+}
+
+record(calc, "$(s,undefined):$(ta,undefined):$(d,undefined):DI2:AlarmMask") {
+   field(INPA, "$(s,undefined):$(ta,undefined):$(d,undefined):DI2:AlarmVal")
+   field(CALC, "A==0?3:A==1?6:9")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):DI2:AlarmSet")
+}
+
+record(seq, "$(s,undefined):$(ta,undefined):$(d,undefined):DI2:AlarmSet") {
+   field(SELM, "Mask")
+   field(SELL, "$(s,undefined):$(ta,undefined):$(d,undefined):DI2:AlarmMask")
+   field(DO1, "0")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):DI2.ZSV PP")
+   field(DO2, "0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):DI2.OSV PP")
+   field(DO3, "2")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):DI2.ZSV PP")
+   field(DO4, "2")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):DI2.OSV PP")
+}
+
+record(bi, "$(s,undefined):$(ta,undefined):$(d,undefined):DI2") {
+   field(INP, "$(s,undefined):$(ta,undefined):$(d,undefined):DIO.B2 CPP MS")
+   info(archive, "Scan, 00:00:01, VAL")
+   info(autosaveFields, "OSV ZSV")
+}
+
+# convert alarm conditions to 0/1, where 1 is alarm. Conditional on alarmEna.
+record(calc, "$(s,undefined):$(ta,undefined):$(d,undefined):DI2:Alarm") {
+   field(INPA, "$(s,undefined):$(ta,undefined):$(d,undefined):DI2.SEVR CPP NMS")
+   field(INPB, "$(s,undefined):$(ta,undefined):$(d,undefined):DI2:AlarmEna CPP NMS")
+   field(CALC, "B&&A>0.5")
+   field(HIHI, "0.5")
+   field(HHSV, "MAJOR")
+}
+
+record(bi, "$(s,undefined):$(ta,undefined):$(d,undefined):DO0:RBV") {
+   field(INP, "$(s,undefined):$(ta,undefined):$(d,undefined):DIO.B8 CPP MS")
+   info(archive, "Scan, 00:00:01, VAL")
+}
+
+record(bi, "$(s,undefined):$(ta,undefined):$(d,undefined):DO1:RBV") {
+   field(INP, "$(s,undefined):$(ta,undefined):$(d,undefined):DIO.B9 CPP MS")
+   info(archive, "Scan, 00:00:01, VAL")
+}
+
+record(bi, "$(s,undefined):$(ta,undefined):$(d,undefined):DO2:RBV") {
+   field(INP, "$(s,undefined):$(ta,undefined):$(d,undefined):DIO.BA CPP MS")
+   info(archive, "Scan, 00:00:01, VAL")
+}
+# writes 8 bits of hex, of which 3 are used
+record(mbboDirect, "$(s,undefined):$(ta,undefined):$(d,undefined):DO") {
+   field(DTYP, "stream")
+   field(OUT, "@i7026.proto setDO(01) $(A7026,undefined) 0")
+   info(autosaveFields, "VAL")
+}
+
+
+record(bo, "$(s,undefined):$(ta,undefined):$(d,undefined):DO0") {
+   field(OUT, "$(s,undefined):$(ta,undefined):$(d,undefined):DO.B0 PP")
+   info(autosaveFields, "VAL")
+   info(archive, "Scan, 00:00:01, VAL")
+}
+
+record(bo, "$(s,undefined):$(ta,undefined):$(d,undefined):DO1") {
+   field(OUT, "$(s,undefined):$(ta,undefined):$(d,undefined):DO.B1 PP")
+   info(autosaveFields, "VAL")
+   info(archive, "Scan, 00:00:01, VAL")
+}
+
+record(bo, "$(s,undefined):$(ta,undefined):$(d,undefined):DO2") {
+   field(OUT, "$(s,undefined):$(ta,undefined):$(d,undefined):DO.B2 PP")
+   info(autosaveFields, "VAL")
+   info(archive, "Scan, 00:00:01, VAL")
+}
+
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):DIO:Init") {
+   field(PINI, "YES")
+   field(TPRO, "1")
+   field(DLY1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):DO0.PROC CA")
+   field(WAIT1, "Wait")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):DO1.PROC CA")
+   field(WAIT2, "Wait")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):DO2.PROC CA")
+   field(WAIT3, "Wait")
+}
+
+# Analog input. HIHI, LOLO, and EGU set automatically based 
+# on range selection. HIGH and LOW set by operator.
+record(ai, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0") {
+   field(DTYP, "stream")
+   field(INP, "@i7026.proto getAI0(01) $(A7026,undefined) 0")
+   field(SCAN, "I/O Intr")
+   field(LSV, "MINOR")
+   field(HSV, "MINOR")
+   field(LLSV, "MAJOR")
+   field(HHSV, "MAJOR")
+   field(PREC, "4")
+   info(autosaveFields, "HIGH LOW")
+   info(archive, "Scan, 00:00:01, VAL")
+}
+
+record(bo, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:AlarmEna") {
+   field(ZNAM, "Disabled")
+   field(ONAM, "Enabled")
+   info(autosaveFields, "VAL")
+}
+
+# convert alarm conditions to 0/1, where 1 is alarm. Conditional on alarmEna.
+record(calc, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:Alarm") {
+   field(INPA, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.SEVR CPP NMS")
+   field(INPB, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:AlarmEna CPP NMS")
+   field(CALC, "B&&A>0.5")
+   field(HIHI, "0.5")
+   field(HHSV, "MAJOR")
+}
+
+record(longout, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:TypeSet") {
+   field(DTYP, "stream")
+   field(OMSL, "closed_loop")
+   field(DOL, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:TypeReq")
+   field(OUT, "@i7026.proto setAIType(01,0) $(A7026,undefined) 0")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:TypeNum")
+   info(archive, "Scan, 00:00:10, VAL")
+}
+
+record(longin, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:TypeNum") {
+   field(DESC, "Read channel type")
+   field(DTYP, "stream")
+   field(INP, "@i7026.proto getAIType(01,0) $(A7026,undefined) 0")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:TypeCalc1")
+   info(archive, "Scan, 00:00:10, VAL")
+}
+
+record(calc, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:TypeCalc1") {
+   field(INPA, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:TypeNum")
+   field(CALC, "A=7?1:A=8?2:A=9?3:A=10?4:A=11?5:A=12?6:A=13?7:A=26?8:9")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:TypeSeq1")
+}
+
+record(stringin, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:Type") {
+}
+
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:TypeSeq1") {
+   field(SELM, "Specified")
+   field(SELL, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:TypeCalc1")
+   field(STR1, "4-20 mA")
+   field(STR2, "+/-10 V")
+   field(STR3, "+/-5 V")
+   field(STR4, "+/-1 V")
+   field(STR5, "+/-500 mV")
+   field(STR6, "+/-150 mV")
+   field(STR7, "+/-20 mA")
+   field(STR8, "0-20 mA")
+   field(STR9, "Invalid")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:Type PP")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:Type PP")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:Type PP")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:Type PP")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:Type PP")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:Type PP")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:Type PP")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:Type PP")
+   field(LNK9, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:Type PP")
+}
+
+record(longout, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:TypeReq") {
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:EGUCalc1")
+   field(DOL, "8")
+   field(LOLO, "-1")
+   field(LLSV, "INVALID")
+   info(autosaveFields, "VAL")
+   field(PINI, "YES")
+}
+
+record(calc, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:EGUCalc1") {
+   field(INPA, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:TypeReq")
+   field(CALC, "A=7?1:A=8?2:A=9?3:A=10?4:A=11?5:A=12?6:A=13?7:A=26?8:9")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:EGUSeq1")
+}
+
+record(seq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:EGUSeq1") {
+   field(SELM, "Specified")
+   field(SELL, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:EGUCalc1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:set4to20mA.PROC PP")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:setpm10V.PROC PP")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:setpm5V.PROC PP")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:setpm1V.PROC PP")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:setpm500mV.PROC PP")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:setpm150mV.PROC PP")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:setpm20mA.PROC PP")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:set0to20mA.PROC PP")
+}
+
+
+# set7026AIEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:setpm500mV") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.DISA")
+   field(DO2, "-500.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.LOLO")
+   field(DO3, "500.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.HIHI")
+   field(DO4, "-500.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.LOW")
+   field(DO5, "500.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.HIGH")
+   field(STR6, "mV")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:TypeSet.PROC PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.DISA")
+}
+
+
+# set7026AIEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:setpm1V") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.DISA")
+   field(DO2, "-1.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.LOLO")
+   field(DO3, "1.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.HIHI")
+   field(DO4, "-1.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.LOW")
+   field(DO5, "1.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.HIGH")
+   field(STR6, "V")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:TypeSet.PROC PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.DISA")
+}
+
+
+# set7026AIEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:setpm20mA") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.DISA")
+   field(DO2, "-20.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.LOLO")
+   field(DO3, "20.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.HIHI")
+   field(DO4, "-20.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.LOW")
+   field(DO5, "20.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.HIGH")
+   field(STR6, "mA")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:TypeSet.PROC PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.DISA")
+}
+
+
+# set7026AIEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:set4to20mA") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.DISA")
+   field(DO2, "4.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.LOLO")
+   field(DO3, "20.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.HIHI")
+   field(DO4, "4.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.LOW")
+   field(DO5, "20.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.HIGH")
+   field(STR6, "mA")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:TypeSet.PROC PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.DISA")
+}
+
+
+# set7026AIEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:setpm10V") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.DISA")
+   field(DO2, "-10.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.LOLO")
+   field(DO3, "10.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.HIHI")
+   field(DO4, "-10.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.LOW")
+   field(DO5, "10.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.HIGH")
+   field(STR6, "V")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:TypeSet.PROC PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.DISA")
+}
+
+
+# set7026AIEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:setpm5V") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.DISA")
+   field(DO2, "-5.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.LOLO")
+   field(DO3, "5.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.HIHI")
+   field(DO4, "-5.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.LOW")
+   field(DO5, "5.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.HIGH")
+   field(STR6, "V")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:TypeSet.PROC PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.DISA")
+}
+
+
+# set7026AIEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:setpm150mV") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.DISA")
+   field(DO2, "-150.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.LOLO")
+   field(DO3, "150.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.HIHI")
+   field(DO4, "-150.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.LOW")
+   field(DO5, "150.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.HIGH")
+   field(STR6, "mV")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:TypeSet.PROC PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.DISA")
+}
+
+
+# set7026AIEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:set0to20mA") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.DISA")
+   field(DO2, "0.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.LOLO")
+   field(DO3, "20.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.HIHI")
+   field(DO4, "0.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.LOW")
+   field(DO5, "20.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.HIGH")
+   field(STR6, "mA")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:TypeSet.PROC PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0.DISA")
+}
+
+# Analog input. HIHI, LOLO, and EGU set automatically based 
+# on range selection. HIGH and LOW set by operator.
+record(ai, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1") {
+   field(DTYP, "stream")
+   field(INP, "@i7026.proto getAI1(01) $(A7026,undefined) 0")
+   field(SCAN, "I/O Intr")
+   field(LSV, "MINOR")
+   field(HSV, "MINOR")
+   field(LLSV, "MAJOR")
+   field(HHSV, "MAJOR")
+   field(PREC, "4")
+   info(autosaveFields, "HIGH LOW")
+   info(archive, "Scan, 00:00:01, VAL")
+}
+
+record(bo, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:AlarmEna") {
+   field(ZNAM, "Disabled")
+   field(ONAM, "Enabled")
+   info(autosaveFields, "VAL")
+}
+
+# convert alarm conditions to 0/1, where 1 is alarm. Conditional on alarmEna.
+record(calc, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:Alarm") {
+   field(INPA, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.SEVR CPP NMS")
+   field(INPB, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:AlarmEna CPP NMS")
+   field(CALC, "B&&A>0.5")
+   field(HIHI, "0.5")
+   field(HHSV, "MAJOR")
+}
+
+record(longout, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:TypeSet") {
+   field(DTYP, "stream")
+   field(OMSL, "closed_loop")
+   field(DOL, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:TypeReq")
+   field(OUT, "@i7026.proto setAIType(01,1) $(A7026,undefined) 0")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:TypeNum")
+   info(archive, "Scan, 00:00:10, VAL")
+}
+
+record(longin, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:TypeNum") {
+   field(DESC, "Read channel type")
+   field(DTYP, "stream")
+   field(INP, "@i7026.proto getAIType(01,1) $(A7026,undefined) 0")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:TypeCalc1")
+   info(archive, "Scan, 00:00:10, VAL")
+}
+
+record(calc, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:TypeCalc1") {
+   field(INPA, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:TypeNum")
+   field(CALC, "A=7?1:A=8?2:A=9?3:A=10?4:A=11?5:A=12?6:A=13?7:A=26?8:9")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:TypeSeq1")
+}
+
+record(stringin, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:Type") {
+}
+
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:TypeSeq1") {
+   field(SELM, "Specified")
+   field(SELL, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:TypeCalc1")
+   field(STR1, "4-20 mA")
+   field(STR2, "+/-10 V")
+   field(STR3, "+/-5 V")
+   field(STR4, "+/-1 V")
+   field(STR5, "+/-500 mV")
+   field(STR6, "+/-150 mV")
+   field(STR7, "+/-20 mA")
+   field(STR8, "0-20 mA")
+   field(STR9, "Invalid")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:Type PP")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:Type PP")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:Type PP")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:Type PP")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:Type PP")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:Type PP")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:Type PP")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:Type PP")
+   field(LNK9, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:Type PP")
+}
+
+record(longout, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:TypeReq") {
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:EGUCalc1")
+   field(DOL, "8")
+   field(LOLO, "-1")
+   field(LLSV, "INVALID")
+   info(autosaveFields, "VAL")
+   field(PINI, "YES")
+}
+
+record(calc, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:EGUCalc1") {
+   field(INPA, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:TypeReq")
+   field(CALC, "A=7?1:A=8?2:A=9?3:A=10?4:A=11?5:A=12?6:A=13?7:A=26?8:9")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:EGUSeq1")
+}
+
+record(seq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:EGUSeq1") {
+   field(SELM, "Specified")
+   field(SELL, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:EGUCalc1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:set4to20mA.PROC PP")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:setpm10V.PROC PP")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:setpm5V.PROC PP")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:setpm1V.PROC PP")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:setpm500mV.PROC PP")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:setpm150mV.PROC PP")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:setpm20mA.PROC PP")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:set0to20mA.PROC PP")
+}
+
+
+# set7026AIEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:setpm500mV") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.DISA")
+   field(DO2, "-500.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.LOLO")
+   field(DO3, "500.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.HIHI")
+   field(DO4, "-500.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.LOW")
+   field(DO5, "500.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.HIGH")
+   field(STR6, "mV")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:TypeSet.PROC PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.DISA")
+}
+
+
+# set7026AIEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:setpm1V") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.DISA")
+   field(DO2, "-1.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.LOLO")
+   field(DO3, "1.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.HIHI")
+   field(DO4, "-1.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.LOW")
+   field(DO5, "1.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.HIGH")
+   field(STR6, "V")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:TypeSet.PROC PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.DISA")
+}
+
+
+# set7026AIEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:setpm20mA") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.DISA")
+   field(DO2, "-20.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.LOLO")
+   field(DO3, "20.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.HIHI")
+   field(DO4, "-20.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.LOW")
+   field(DO5, "20.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.HIGH")
+   field(STR6, "mA")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:TypeSet.PROC PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.DISA")
+}
+
+
+# set7026AIEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:set4to20mA") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.DISA")
+   field(DO2, "4.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.LOLO")
+   field(DO3, "20.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.HIHI")
+   field(DO4, "4.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.LOW")
+   field(DO5, "20.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.HIGH")
+   field(STR6, "mA")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:TypeSet.PROC PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.DISA")
+}
+
+
+# set7026AIEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:setpm10V") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.DISA")
+   field(DO2, "-10.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.LOLO")
+   field(DO3, "10.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.HIHI")
+   field(DO4, "-10.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.LOW")
+   field(DO5, "10.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.HIGH")
+   field(STR6, "V")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:TypeSet.PROC PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.DISA")
+}
+
+
+# set7026AIEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:setpm5V") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.DISA")
+   field(DO2, "-5.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.LOLO")
+   field(DO3, "5.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.HIHI")
+   field(DO4, "-5.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.LOW")
+   field(DO5, "5.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.HIGH")
+   field(STR6, "V")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:TypeSet.PROC PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.DISA")
+}
+
+
+# set7026AIEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:setpm150mV") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.DISA")
+   field(DO2, "-150.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.LOLO")
+   field(DO3, "150.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.HIHI")
+   field(DO4, "-150.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.LOW")
+   field(DO5, "150.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.HIGH")
+   field(STR6, "mV")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:TypeSet.PROC PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.DISA")
+}
+
+
+# set7026AIEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:set0to20mA") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.DISA")
+   field(DO2, "0.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.LOLO")
+   field(DO3, "20.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.HIHI")
+   field(DO4, "0.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.LOW")
+   field(DO5, "20.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.HIGH")
+   field(STR6, "mA")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:TypeSet.PROC PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1.DISA")
+}
+
+# Analog input. HIHI, LOLO, and EGU set automatically based 
+# on range selection. HIGH and LOW set by operator.
+record(ai, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2") {
+   field(DTYP, "stream")
+   field(INP, "@i7026.proto getAI2(01) $(A7026,undefined) 0")
+   field(SCAN, "I/O Intr")
+   field(LSV, "MINOR")
+   field(HSV, "MINOR")
+   field(LLSV, "MAJOR")
+   field(HHSV, "MAJOR")
+   field(PREC, "4")
+   info(autosaveFields, "HIGH LOW")
+   info(archive, "Scan, 00:00:01, VAL")
+}
+
+record(bo, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:AlarmEna") {
+   field(ZNAM, "Disabled")
+   field(ONAM, "Enabled")
+   info(autosaveFields, "VAL")
+}
+
+# convert alarm conditions to 0/1, where 1 is alarm. Conditional on alarmEna.
+record(calc, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:Alarm") {
+   field(INPA, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.SEVR CPP NMS")
+   field(INPB, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:AlarmEna CPP NMS")
+   field(CALC, "B&&A>0.5")
+   field(HIHI, "0.5")
+   field(HHSV, "MAJOR")
+}
+
+record(longout, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:TypeSet") {
+   field(DTYP, "stream")
+   field(OMSL, "closed_loop")
+   field(DOL, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:TypeReq")
+   field(OUT, "@i7026.proto setAIType(01,2) $(A7026,undefined) 0")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:TypeNum")
+   info(archive, "Scan, 00:00:10, VAL")
+}
+
+record(longin, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:TypeNum") {
+   field(DESC, "Read channel type")
+   field(DTYP, "stream")
+   field(INP, "@i7026.proto getAIType(01,2) $(A7026,undefined) 0")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:TypeCalc1")
+   info(archive, "Scan, 00:00:10, VAL")
+}
+
+record(calc, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:TypeCalc1") {
+   field(INPA, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:TypeNum")
+   field(CALC, "A=7?1:A=8?2:A=9?3:A=10?4:A=11?5:A=12?6:A=13?7:A=26?8:9")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:TypeSeq1")
+}
+
+record(stringin, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:Type") {
+}
+
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:TypeSeq1") {
+   field(SELM, "Specified")
+   field(SELL, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:TypeCalc1")
+   field(STR1, "4-20 mA")
+   field(STR2, "+/-10 V")
+   field(STR3, "+/-5 V")
+   field(STR4, "+/-1 V")
+   field(STR5, "+/-500 mV")
+   field(STR6, "+/-150 mV")
+   field(STR7, "+/-20 mA")
+   field(STR8, "0-20 mA")
+   field(STR9, "Invalid")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:Type PP")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:Type PP")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:Type PP")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:Type PP")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:Type PP")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:Type PP")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:Type PP")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:Type PP")
+   field(LNK9, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:Type PP")
+}
+
+record(longout, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:TypeReq") {
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:EGUCalc1")
+   field(DOL, "8")
+   field(LOLO, "-1")
+   field(LLSV, "INVALID")
+   info(autosaveFields, "VAL")
+   field(PINI, "YES")
+}
+
+record(calc, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:EGUCalc1") {
+   field(INPA, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:TypeReq")
+   field(CALC, "A=7?1:A=8?2:A=9?3:A=10?4:A=11?5:A=12?6:A=13?7:A=26?8:9")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:EGUSeq1")
+}
+
+record(seq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:EGUSeq1") {
+   field(SELM, "Specified")
+   field(SELL, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:EGUCalc1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:set4to20mA.PROC PP")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:setpm10V.PROC PP")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:setpm5V.PROC PP")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:setpm1V.PROC PP")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:setpm500mV.PROC PP")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:setpm150mV.PROC PP")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:setpm20mA.PROC PP")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:set0to20mA.PROC PP")
+}
+
+
+# set7026AIEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:setpm500mV") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.DISA")
+   field(DO2, "-500.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.LOLO")
+   field(DO3, "500.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.HIHI")
+   field(DO4, "-500.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.LOW")
+   field(DO5, "500.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.HIGH")
+   field(STR6, "mV")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:TypeSet.PROC PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.DISA")
+}
+
+
+# set7026AIEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:setpm1V") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.DISA")
+   field(DO2, "-1.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.LOLO")
+   field(DO3, "1.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.HIHI")
+   field(DO4, "-1.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.LOW")
+   field(DO5, "1.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.HIGH")
+   field(STR6, "V")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:TypeSet.PROC PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.DISA")
+}
+
+
+# set7026AIEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:setpm20mA") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.DISA")
+   field(DO2, "-20.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.LOLO")
+   field(DO3, "20.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.HIHI")
+   field(DO4, "-20.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.LOW")
+   field(DO5, "20.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.HIGH")
+   field(STR6, "mA")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:TypeSet.PROC PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.DISA")
+}
+
+
+# set7026AIEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:set4to20mA") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.DISA")
+   field(DO2, "4.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.LOLO")
+   field(DO3, "20.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.HIHI")
+   field(DO4, "4.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.LOW")
+   field(DO5, "20.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.HIGH")
+   field(STR6, "mA")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:TypeSet.PROC PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.DISA")
+}
+
+
+# set7026AIEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:setpm10V") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.DISA")
+   field(DO2, "-10.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.LOLO")
+   field(DO3, "10.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.HIHI")
+   field(DO4, "-10.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.LOW")
+   field(DO5, "10.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.HIGH")
+   field(STR6, "V")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:TypeSet.PROC PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.DISA")
+}
+
+
+# set7026AIEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:setpm5V") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.DISA")
+   field(DO2, "-5.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.LOLO")
+   field(DO3, "5.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.HIHI")
+   field(DO4, "-5.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.LOW")
+   field(DO5, "5.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.HIGH")
+   field(STR6, "V")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:TypeSet.PROC PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.DISA")
+}
+
+
+# set7026AIEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:setpm150mV") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.DISA")
+   field(DO2, "-150.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.LOLO")
+   field(DO3, "150.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.HIHI")
+   field(DO4, "-150.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.LOW")
+   field(DO5, "150.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.HIGH")
+   field(STR6, "mV")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:TypeSet.PROC PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.DISA")
+}
+
+
+# set7026AIEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:set0to20mA") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.DISA")
+   field(DO2, "0.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.LOLO")
+   field(DO3, "20.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.HIHI")
+   field(DO4, "0.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.LOW")
+   field(DO5, "20.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.HIGH")
+   field(STR6, "mA")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:TypeSet.PROC PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2.DISA")
+}
+
+# Analog input. HIHI, LOLO, and EGU set automatically based 
+# on range selection. HIGH and LOW set by operator.
+record(ai, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3") {
+   field(DTYP, "stream")
+   field(INP, "@i7026.proto getAI3(01) $(A7026,undefined) 0")
+   field(SCAN, "I/O Intr")
+   field(LSV, "MINOR")
+   field(HSV, "MINOR")
+   field(LLSV, "MAJOR")
+   field(HHSV, "MAJOR")
+   field(PREC, "4")
+   info(autosaveFields, "HIGH LOW")
+   info(archive, "Scan, 00:00:01, VAL")
+}
+
+record(bo, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:AlarmEna") {
+   field(ZNAM, "Disabled")
+   field(ONAM, "Enabled")
+   info(autosaveFields, "VAL")
+}
+
+# convert alarm conditions to 0/1, where 1 is alarm. Conditional on alarmEna.
+record(calc, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:Alarm") {
+   field(INPA, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.SEVR CPP NMS")
+   field(INPB, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:AlarmEna CPP NMS")
+   field(CALC, "B&&A>0.5")
+   field(HIHI, "0.5")
+   field(HHSV, "MAJOR")
+}
+
+record(longout, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:TypeSet") {
+   field(DTYP, "stream")
+   field(OMSL, "closed_loop")
+   field(DOL, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:TypeReq")
+   field(OUT, "@i7026.proto setAIType(01,3) $(A7026,undefined) 0")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:TypeNum")
+   info(archive, "Scan, 00:00:10, VAL")
+}
+
+record(longin, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:TypeNum") {
+   field(DESC, "Read channel type")
+   field(DTYP, "stream")
+   field(INP, "@i7026.proto getAIType(01,3) $(A7026,undefined) 0")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:TypeCalc1")
+   info(archive, "Scan, 00:00:10, VAL")
+}
+
+record(calc, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:TypeCalc1") {
+   field(INPA, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:TypeNum")
+   field(CALC, "A=7?1:A=8?2:A=9?3:A=10?4:A=11?5:A=12?6:A=13?7:A=26?8:9")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:TypeSeq1")
+}
+
+record(stringin, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:Type") {
+}
+
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:TypeSeq1") {
+   field(SELM, "Specified")
+   field(SELL, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:TypeCalc1")
+   field(STR1, "4-20 mA")
+   field(STR2, "+/-10 V")
+   field(STR3, "+/-5 V")
+   field(STR4, "+/-1 V")
+   field(STR5, "+/-500 mV")
+   field(STR6, "+/-150 mV")
+   field(STR7, "+/-20 mA")
+   field(STR8, "0-20 mA")
+   field(STR9, "Invalid")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:Type PP")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:Type PP")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:Type PP")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:Type PP")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:Type PP")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:Type PP")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:Type PP")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:Type PP")
+   field(LNK9, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:Type PP")
+}
+
+record(longout, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:TypeReq") {
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:EGUCalc1")
+   field(DOL, "8")
+   field(LOLO, "-1")
+   field(LLSV, "INVALID")
+   info(autosaveFields, "VAL")
+   field(PINI, "YES")
+}
+
+record(calc, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:EGUCalc1") {
+   field(INPA, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:TypeReq")
+   field(CALC, "A=7?1:A=8?2:A=9?3:A=10?4:A=11?5:A=12?6:A=13?7:A=26?8:9")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:EGUSeq1")
+}
+
+record(seq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:EGUSeq1") {
+   field(SELM, "Specified")
+   field(SELL, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:EGUCalc1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:set4to20mA.PROC PP")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:setpm10V.PROC PP")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:setpm5V.PROC PP")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:setpm1V.PROC PP")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:setpm500mV.PROC PP")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:setpm150mV.PROC PP")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:setpm20mA.PROC PP")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:set0to20mA.PROC PP")
+}
+
+
+# set7026AIEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:setpm500mV") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.DISA")
+   field(DO2, "-500.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.LOLO")
+   field(DO3, "500.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.HIHI")
+   field(DO4, "-500.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.LOW")
+   field(DO5, "500.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.HIGH")
+   field(STR6, "mV")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:TypeSet.PROC PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.DISA")
+}
+
+
+# set7026AIEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:setpm1V") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.DISA")
+   field(DO2, "-1.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.LOLO")
+   field(DO3, "1.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.HIHI")
+   field(DO4, "-1.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.LOW")
+   field(DO5, "1.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.HIGH")
+   field(STR6, "V")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:TypeSet.PROC PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.DISA")
+}
+
+
+# set7026AIEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:setpm20mA") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.DISA")
+   field(DO2, "-20.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.LOLO")
+   field(DO3, "20.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.HIHI")
+   field(DO4, "-20.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.LOW")
+   field(DO5, "20.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.HIGH")
+   field(STR6, "mA")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:TypeSet.PROC PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.DISA")
+}
+
+
+# set7026AIEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:set4to20mA") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.DISA")
+   field(DO2, "4.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.LOLO")
+   field(DO3, "20.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.HIHI")
+   field(DO4, "4.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.LOW")
+   field(DO5, "20.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.HIGH")
+   field(STR6, "mA")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:TypeSet.PROC PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.DISA")
+}
+
+
+# set7026AIEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:setpm10V") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.DISA")
+   field(DO2, "-10.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.LOLO")
+   field(DO3, "10.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.HIHI")
+   field(DO4, "-10.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.LOW")
+   field(DO5, "10.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.HIGH")
+   field(STR6, "V")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:TypeSet.PROC PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.DISA")
+}
+
+
+# set7026AIEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:setpm5V") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.DISA")
+   field(DO2, "-5.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.LOLO")
+   field(DO3, "5.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.HIHI")
+   field(DO4, "-5.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.LOW")
+   field(DO5, "5.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.HIGH")
+   field(STR6, "V")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:TypeSet.PROC PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.DISA")
+}
+
+
+# set7026AIEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:setpm150mV") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.DISA")
+   field(DO2, "-150.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.LOLO")
+   field(DO3, "150.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.HIHI")
+   field(DO4, "-150.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.LOW")
+   field(DO5, "150.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.HIGH")
+   field(STR6, "mV")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:TypeSet.PROC PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.DISA")
+}
+
+
+# set7026AIEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:set0to20mA") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.DISA")
+   field(DO2, "0.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.LOLO")
+   field(DO3, "20.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.HIHI")
+   field(DO4, "0.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.LOW")
+   field(DO5, "20.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.HIGH")
+   field(STR6, "mA")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:TypeSet.PROC PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3.DISA")
+}
+
+# Analog input. HIHI, LOLO, and EGU set automatically based 
+# on range selection. HIGH and LOW set by operator.
+record(ai, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4") {
+   field(DTYP, "stream")
+   field(INP, "@i7026.proto getAI4(01) $(A7026,undefined) 0")
+   field(SCAN, "I/O Intr")
+   field(LSV, "MINOR")
+   field(HSV, "MINOR")
+   field(LLSV, "MAJOR")
+   field(HHSV, "MAJOR")
+   field(PREC, "4")
+   info(autosaveFields, "HIGH LOW")
+   info(archive, "Scan, 00:00:01, VAL")
+}
+
+record(bo, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:AlarmEna") {
+   field(ZNAM, "Disabled")
+   field(ONAM, "Enabled")
+   info(autosaveFields, "VAL")
+}
+
+# convert alarm conditions to 0/1, where 1 is alarm. Conditional on alarmEna.
+record(calc, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:Alarm") {
+   field(INPA, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.SEVR CPP NMS")
+   field(INPB, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:AlarmEna CPP NMS")
+   field(CALC, "B&&A>0.5")
+   field(HIHI, "0.5")
+   field(HHSV, "MAJOR")
+}
+
+record(longout, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:TypeSet") {
+   field(DTYP, "stream")
+   field(OMSL, "closed_loop")
+   field(DOL, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:TypeReq")
+   field(OUT, "@i7026.proto setAIType(01,4) $(A7026,undefined) 0")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:TypeNum")
+   info(archive, "Scan, 00:00:10, VAL")
+}
+
+record(longin, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:TypeNum") {
+   field(DESC, "Read channel type")
+   field(DTYP, "stream")
+   field(INP, "@i7026.proto getAIType(01,4) $(A7026,undefined) 0")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:TypeCalc1")
+   info(archive, "Scan, 00:00:10, VAL")
+}
+
+record(calc, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:TypeCalc1") {
+   field(INPA, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:TypeNum")
+   field(CALC, "A=7?1:A=8?2:A=9?3:A=10?4:A=11?5:A=12?6:A=13?7:A=26?8:9")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:TypeSeq1")
+}
+
+record(stringin, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:Type") {
+}
+
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:TypeSeq1") {
+   field(SELM, "Specified")
+   field(SELL, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:TypeCalc1")
+   field(STR1, "4-20 mA")
+   field(STR2, "+/-10 V")
+   field(STR3, "+/-5 V")
+   field(STR4, "+/-1 V")
+   field(STR5, "+/-500 mV")
+   field(STR6, "+/-150 mV")
+   field(STR7, "+/-20 mA")
+   field(STR8, "0-20 mA")
+   field(STR9, "Invalid")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:Type PP")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:Type PP")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:Type PP")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:Type PP")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:Type PP")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:Type PP")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:Type PP")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:Type PP")
+   field(LNK9, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:Type PP")
+}
+
+record(longout, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:TypeReq") {
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:EGUCalc1")
+   field(DOL, "8")
+   field(LOLO, "-1")
+   field(LLSV, "INVALID")
+   info(autosaveFields, "VAL")
+   field(PINI, "YES")
+}
+
+record(calc, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:EGUCalc1") {
+   field(INPA, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:TypeReq")
+   field(CALC, "A=7?1:A=8?2:A=9?3:A=10?4:A=11?5:A=12?6:A=13?7:A=26?8:9")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:EGUSeq1")
+}
+
+record(seq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:EGUSeq1") {
+   field(SELM, "Specified")
+   field(SELL, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:EGUCalc1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:set4to20mA.PROC PP")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:setpm10V.PROC PP")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:setpm5V.PROC PP")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:setpm1V.PROC PP")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:setpm500mV.PROC PP")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:setpm150mV.PROC PP")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:setpm20mA.PROC PP")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:set0to20mA.PROC PP")
+}
+
+
+# set7026AIEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:setpm500mV") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.DISA")
+   field(DO2, "-500.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.LOLO")
+   field(DO3, "500.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.HIHI")
+   field(DO4, "-500.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.LOW")
+   field(DO5, "500.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.HIGH")
+   field(STR6, "mV")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:TypeSet.PROC PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.DISA")
+}
+
+
+# set7026AIEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:setpm1V") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.DISA")
+   field(DO2, "-1.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.LOLO")
+   field(DO3, "1.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.HIHI")
+   field(DO4, "-1.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.LOW")
+   field(DO5, "1.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.HIGH")
+   field(STR6, "V")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:TypeSet.PROC PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.DISA")
+}
+
+
+# set7026AIEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:setpm20mA") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.DISA")
+   field(DO2, "-20.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.LOLO")
+   field(DO3, "20.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.HIHI")
+   field(DO4, "-20.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.LOW")
+   field(DO5, "20.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.HIGH")
+   field(STR6, "mA")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:TypeSet.PROC PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.DISA")
+}
+
+
+# set7026AIEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:set4to20mA") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.DISA")
+   field(DO2, "4.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.LOLO")
+   field(DO3, "20.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.HIHI")
+   field(DO4, "4.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.LOW")
+   field(DO5, "20.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.HIGH")
+   field(STR6, "mA")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:TypeSet.PROC PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.DISA")
+}
+
+
+# set7026AIEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:setpm10V") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.DISA")
+   field(DO2, "-10.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.LOLO")
+   field(DO3, "10.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.HIHI")
+   field(DO4, "-10.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.LOW")
+   field(DO5, "10.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.HIGH")
+   field(STR6, "V")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:TypeSet.PROC PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.DISA")
+}
+
+
+# set7026AIEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:setpm5V") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.DISA")
+   field(DO2, "-5.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.LOLO")
+   field(DO3, "5.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.HIHI")
+   field(DO4, "-5.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.LOW")
+   field(DO5, "5.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.HIGH")
+   field(STR6, "V")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:TypeSet.PROC PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.DISA")
+}
+
+
+# set7026AIEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:setpm150mV") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.DISA")
+   field(DO2, "-150.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.LOLO")
+   field(DO3, "150.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.HIHI")
+   field(DO4, "-150.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.LOW")
+   field(DO5, "150.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.HIGH")
+   field(STR6, "mV")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:TypeSet.PROC PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.DISA")
+}
+
+
+# set7026AIEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:set0to20mA") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.DISA")
+   field(DO2, "0.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.LOLO")
+   field(DO3, "20.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.HIHI")
+   field(DO4, "0.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.LOW")
+   field(DO5, "20.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.HIGH")
+   field(STR6, "mA")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:TypeSet.PROC PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4.DISA")
+}
+
+# Analog input. HIHI, LOLO, and EGU set automatically based 
+# on range selection. HIGH and LOW set by operator.
+record(ai, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5") {
+   field(DTYP, "stream")
+   field(INP, "@i7026.proto getAI5(01) $(A7026,undefined) 0")
+   field(SCAN, "I/O Intr")
+   field(LSV, "MINOR")
+   field(HSV, "MINOR")
+   field(LLSV, "MAJOR")
+   field(HHSV, "MAJOR")
+   field(PREC, "4")
+   info(autosaveFields, "HIGH LOW")
+   info(archive, "Scan, 00:00:01, VAL")
+}
+
+record(bo, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:AlarmEna") {
+   field(ZNAM, "Disabled")
+   field(ONAM, "Enabled")
+   info(autosaveFields, "VAL")
+}
+
+# convert alarm conditions to 0/1, where 1 is alarm. Conditional on alarmEna.
+record(calc, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:Alarm") {
+   field(INPA, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.SEVR CPP NMS")
+   field(INPB, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:AlarmEna CPP NMS")
+   field(CALC, "B&&A>0.5")
+   field(HIHI, "0.5")
+   field(HHSV, "MAJOR")
+}
+
+record(longout, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:TypeSet") {
+   field(DTYP, "stream")
+   field(OMSL, "closed_loop")
+   field(DOL, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:TypeReq")
+   field(OUT, "@i7026.proto setAIType(01,5) $(A7026,undefined) 0")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:TypeNum")
+   info(archive, "Scan, 00:00:10, VAL")
+}
+
+record(longin, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:TypeNum") {
+   field(DESC, "Read channel type")
+   field(DTYP, "stream")
+   field(INP, "@i7026.proto getAIType(01,5) $(A7026,undefined) 0")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:TypeCalc1")
+   info(archive, "Scan, 00:00:10, VAL")
+}
+
+record(calc, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:TypeCalc1") {
+   field(INPA, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:TypeNum")
+   field(CALC, "A=7?1:A=8?2:A=9?3:A=10?4:A=11?5:A=12?6:A=13?7:A=26?8:9")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:TypeSeq1")
+}
+
+record(stringin, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:Type") {
+}
+
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:TypeSeq1") {
+   field(SELM, "Specified")
+   field(SELL, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:TypeCalc1")
+   field(STR1, "4-20 mA")
+   field(STR2, "+/-10 V")
+   field(STR3, "+/-5 V")
+   field(STR4, "+/-1 V")
+   field(STR5, "+/-500 mV")
+   field(STR6, "+/-150 mV")
+   field(STR7, "+/-20 mA")
+   field(STR8, "0-20 mA")
+   field(STR9, "Invalid")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:Type PP")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:Type PP")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:Type PP")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:Type PP")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:Type PP")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:Type PP")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:Type PP")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:Type PP")
+   field(LNK9, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:Type PP")
+}
+
+record(longout, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:TypeReq") {
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:EGUCalc1")
+   field(DOL, "8")
+   field(LOLO, "-1")
+   field(LLSV, "INVALID")
+   info(autosaveFields, "VAL")
+   field(PINI, "YES")
+}
+
+record(calc, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:EGUCalc1") {
+   field(INPA, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:TypeReq")
+   field(CALC, "A=7?1:A=8?2:A=9?3:A=10?4:A=11?5:A=12?6:A=13?7:A=26?8:9")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:EGUSeq1")
+}
+
+record(seq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:EGUSeq1") {
+   field(SELM, "Specified")
+   field(SELL, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:EGUCalc1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:set4to20mA.PROC PP")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:setpm10V.PROC PP")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:setpm5V.PROC PP")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:setpm1V.PROC PP")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:setpm500mV.PROC PP")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:setpm150mV.PROC PP")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:setpm20mA.PROC PP")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:set0to20mA.PROC PP")
+}
+
+
+# set7026AIEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:setpm500mV") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.DISA")
+   field(DO2, "-500.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.LOLO")
+   field(DO3, "500.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.HIHI")
+   field(DO4, "-500.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.LOW")
+   field(DO5, "500.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.HIGH")
+   field(STR6, "mV")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:TypeSet.PROC PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.DISA")
+}
+
+
+# set7026AIEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:setpm1V") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.DISA")
+   field(DO2, "-1.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.LOLO")
+   field(DO3, "1.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.HIHI")
+   field(DO4, "-1.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.LOW")
+   field(DO5, "1.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.HIGH")
+   field(STR6, "V")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:TypeSet.PROC PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.DISA")
+}
+
+
+# set7026AIEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:setpm20mA") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.DISA")
+   field(DO2, "-20.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.LOLO")
+   field(DO3, "20.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.HIHI")
+   field(DO4, "-20.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.LOW")
+   field(DO5, "20.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.HIGH")
+   field(STR6, "mA")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:TypeSet.PROC PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.DISA")
+}
+
+
+# set7026AIEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:set4to20mA") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.DISA")
+   field(DO2, "4.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.LOLO")
+   field(DO3, "20.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.HIHI")
+   field(DO4, "4.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.LOW")
+   field(DO5, "20.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.HIGH")
+   field(STR6, "mA")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:TypeSet.PROC PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.DISA")
+}
+
+
+# set7026AIEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:setpm10V") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.DISA")
+   field(DO2, "-10.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.LOLO")
+   field(DO3, "10.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.HIHI")
+   field(DO4, "-10.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.LOW")
+   field(DO5, "10.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.HIGH")
+   field(STR6, "V")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:TypeSet.PROC PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.DISA")
+}
+
+
+# set7026AIEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:setpm5V") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.DISA")
+   field(DO2, "-5.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.LOLO")
+   field(DO3, "5.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.HIHI")
+   field(DO4, "-5.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.LOW")
+   field(DO5, "5.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.HIGH")
+   field(STR6, "V")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:TypeSet.PROC PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.DISA")
+}
+
+
+# set7026AIEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:setpm150mV") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.DISA")
+   field(DO2, "-150.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.LOLO")
+   field(DO3, "150.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.HIHI")
+   field(DO4, "-150.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.LOW")
+   field(DO5, "150.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.HIGH")
+   field(STR6, "mV")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:TypeSet.PROC PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.DISA")
+}
+
+
+# set7026AIEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:set0to20mA") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.DISA")
+   field(DO2, "0.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.LOLO")
+   field(DO3, "20.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.HIHI")
+   field(DO4, "0.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.LOW")
+   field(DO5, "20.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.HIGH")
+   field(STR6, "mA")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:TypeSet.PROC PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5.DISA")
+}
+
+# This must be instantiated for channel 0 only after instantiations of 
+# 7026Input.template
+record(ai, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0") {
+   field(DTYP, "stream")
+   field(INP, "@i7026.proto getAI0(01) $(A7026,undefined) 0")
+   field(SCAN, ".1 second")
+}
+
+record(bo, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn:Res") {
+   field(DTYP, "stream")
+   field(DOL, "1")
+   field(PINI, "YES")
+   field(OUT, "@i7026.proto setHiRes(01) $(A7026,undefined) 0")
+   field(ZNAM, "12 bits (~10 Hz)")
+   field(ONAM, "16 bits (~2 Hz)")
+   info(autosaveFields, "VAL")
+}
+
+
+record (sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:Init") {
+   field(PINI, "YES")
+   field(TPRO, "1")
+   field(DLY1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:TypeReq.PROC CA")
+   field(WAIT1, "Wait")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:SRReq.PROC CA")
+   field(WAIT2, "Wait")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0.PROC CA")
+   field(WAIT3, "Wait")
+}
+
+record(ao, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0") {
+   field(DTYP, "stream")
+   field(OUT, "@i7026.proto setAO(01,0) $(A7026,undefined) 0")
+   info(autosaveFields, "VAL")
+   field(PREC, "3")
+   info(archive, "Scan, 00:00:01, VAL")
+}
+
+record(longout, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:TypeSet") {
+   field(OMSL, "closed_loop")
+   field(DOL, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:TypeReq")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:AOSet")
+}
+
+record(longout, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:SRSet") {
+   field(OMSL, "closed_loop")
+   field(DOL, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:SRReq")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:AOSet")
+}
+
+record(longout, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:AOSet") {
+   field(DTYP, "stream")
+   field(DOL, "0")
+   field(OUT, "@i7026.proto setAOType(01,0,$(s,undefined):$(ta,undefined):$(d,undefined):VOut0) $(A7026,undefined) 0")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:AOGet")
+}
+
+record(longin, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:AOGet") {
+   field(DTYP, "stream")
+   field(INP, "@i7026.proto getAOType(01,0,$(s,undefined):$(ta,undefined):$(d,undefined):VOut0) $(A7026,undefined) 0")
+}
+
+record(longin, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:TypeNum") {
+   field(DESC, "Read channel type")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:TypeCalc1")
+   info(archive, "Scan, 00:00:10, VAL")
+}
+
+record(longin, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:SRNum") {
+   field(DESC, "Read channel slew rate")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:SRCalc1")
+   info(archive, "Scan, 00:00:10, VAL")
+}
+
+record(calc, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:TypeCalc1") {
+   field(INPA, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:TypeNum")
+   field(CALC, "A>-1&&A<6?A+1:7")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:TypeSeq1")
+}
+
+record(calc, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:SRCalc1") {
+   field(INPA, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:SRNum")
+   field(CALC, "A>0&&A<16?floor(A/2)+1:3")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:SRSeq1")
+}
+
+record(seq, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:SRSeq1") {
+   field(SELM, "Specified")
+   field(SELL, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:SRCalc1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:SRCalc21")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:SRCalc22")
+}
+
+record(calc, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:SRCalc21") {
+   field(INPA, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:SRNum")
+   field(CALC, "A%2")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:SRSeq21")
+}
+
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:SRSeq21") {
+   field(SELM, "Specified")
+   field(SELL, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:SRCalc21")
+   field(STR1, "Immediate")
+   field(STR2, "0.0625 V/s or 0.125 mA/s")
+   field(STR3, "0.125 V/s or 0.25 mA/s")
+   field(STR4, "0.25 V/s or 0.5 mA/s")
+   field(STR5, "0.5 V/s or 1.0 mA/s")
+   field(STR6, "1.0 V/s or 2.0 mA/s")
+   field(STR7, "2.0 V/s or 4.0 mA/s")
+   field(STR8, "4.0 V/s or 8.0 mA/s")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:SR PP")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:SR PP")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:SR PP")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:SR PP")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:SR PP")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:SR PP")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:SR PP")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:SR PP")
+}
+
+record(calc, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:SRCalc22") {
+   field(INPA, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:SRNum")
+   field(CALC, "A%2")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:SRSeq22")
+}
+
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:SRSeq22") {
+   field(SELM, "Specified")
+   field(SELL, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:SRCalc22")
+   field(STR1, "8.0 V/s or 16 mA/s")
+   field(STR2, "16 V/s or 32 mA/s")
+   field(STR3, "32 V/s or 64 mA/s")
+   field(STR4, "64 V/s or 128 mA/s")
+   field(STR5, "128 V/s or 256 mA/s")
+   field(STR6, "256 V/s or 512 mA/s")
+   field(STR7, "512 V/s or 1024 mA/s")
+   field(STR8, "1024 V/s or 2048 mA/s")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:SR PP")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:SR PP")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:SR PP")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:SR PP")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:SR PP")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:SR PP")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:SR PP")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:SR PP")
+}
+
+record(stringin, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:Type") {
+}
+
+record(stringin, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:SR") {
+}
+
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:TypeSeq1") {
+   field(SELM, "Specified")
+   field(SELL, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:TypeCalc1")
+   field(STR1, "0-20 mA")
+   field(STR2, "4-20 mA")
+   field(STR3, "0-10 V")
+   field(STR4, "+/-10 V")
+   field(STR5, "0-5 V")
+   field(STR6, "+/-5 V")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:Type PP")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:Type PP")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:Type PP")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:Type PP")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:Type PP")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:Type PP")
+}
+
+record(longout, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:TypeReq") {
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:EGUCalc1")
+   field(DOL, "3")
+   field(LOLO, "-1")
+   field(LLSV, "INVALID")
+   info(autosaveFields, "VAL")
+   info(archive, "Scan, 00:00:10, VAL")
+}
+
+record(longout, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:SRReq") {
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:SRSet")
+   field(DOL, "0")
+   field(LOLO, "-1")
+   field(LLSV, "INVALID")
+   info(autosaveFields, "VAL")
+   field(PINI, "YES")
+   info(archive, "Scan, 00:00:10, VAL")
+}
+
+record(calc, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:EGUCalc1") {
+   field(INPA, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:TypeReq")
+   field(CALC, "A>-1&&A<6?A+1:7")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:EGUSeq1")
+}
+
+record(seq, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:EGUSeq1") {
+   field(SELM, "Specified")
+   field(SELL, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:EGUCalc1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:set0to20mA.PROC PP")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:set4to20mA.PROC PP")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:set0to10V.PROC PP")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:setpm10V.PROC PP")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:set0to5V.PROC PP")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:setpm5V.PROC PP")
+}
+
+
+# set7026AOEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:set4to20mA") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0.DISA")
+   field(DO2, "4.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0.DRVL")
+   field(DO3, "20.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0.DRVH")
+   field(DO4, "4.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0.LOPR")
+   field(DO5, "20.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0.HOPR")
+   field(STR6, "mA")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:TypeSet PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0.DISA")
+}
+
+
+# set7026AOEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:set0to20mA") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0.DISA")
+   field(DO2, "0.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0.DRVL")
+   field(DO3, "20.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0.DRVH")
+   field(DO4, "0.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0.LOPR")
+   field(DO5, "20.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0.HOPR")
+   field(STR6, "mA")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:TypeSet PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0.DISA")
+}
+
+
+# set7026AOEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:setpm10V") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0.DISA")
+   field(DO2, "-10.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0.DRVL")
+   field(DO3, "10.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0.DRVH")
+   field(DO4, "-10.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0.LOPR")
+   field(DO5, "10.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0.HOPR")
+   field(STR6, "V")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:TypeSet PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0.DISA")
+}
+
+
+# set7026AOEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:setpm5V") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0.DISA")
+   field(DO2, "-5.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0.DRVL")
+   field(DO3, "5.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0.DRVH")
+   field(DO4, "-5.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0.LOPR")
+   field(DO5, "5.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0.HOPR")
+   field(STR6, "V")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:TypeSet PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0.DISA")
+}
+
+
+# set7026AOEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:set0to10V") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0.DISA")
+   field(DO2, "0.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0.DRVL")
+   field(DO3, "10.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0.DRVH")
+   field(DO4, "0.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0.LOPR")
+   field(DO5, "10.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0.HOPR")
+   field(STR6, "V")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:TypeSet PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0.DISA")
+}
+
+
+# set7026AOEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:set0to5V") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0.DISA")
+   field(DO2, "0.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0.DRVL")
+   field(DO3, "5.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0.DRVH")
+   field(DO4, "0.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0.LOPR")
+   field(DO5, "5.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0.HOPR")
+   field(STR6, "V")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0:TypeSet PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut0.DISA")
+}
+
+
+
+record (sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:Init") {
+   field(PINI, "YES")
+   field(TPRO, "1")
+   field(DLY1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:TypeReq.PROC CA")
+   field(WAIT1, "Wait")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:SRReq.PROC CA")
+   field(WAIT2, "Wait")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1.PROC CA")
+   field(WAIT3, "Wait")
+}
+
+record(ao, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1") {
+   field(DTYP, "stream")
+   field(OUT, "@i7026.proto setAO(01,1) $(A7026,undefined) 0")
+   info(autosaveFields, "VAL")
+   field(PREC, "3")
+   info(archive, "Scan, 00:00:01, VAL")
+}
+
+record(longout, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:TypeSet") {
+   field(OMSL, "closed_loop")
+   field(DOL, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:TypeReq")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:AOSet")
+}
+
+record(longout, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:SRSet") {
+   field(OMSL, "closed_loop")
+   field(DOL, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:SRReq")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:AOSet")
+}
+
+record(longout, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:AOSet") {
+   field(DTYP, "stream")
+   field(DOL, "0")
+   field(OUT, "@i7026.proto setAOType(01,1,$(s,undefined):$(ta,undefined):$(d,undefined):VOut1) $(A7026,undefined) 0")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:AOGet")
+}
+
+record(longin, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:AOGet") {
+   field(DTYP, "stream")
+   field(INP, "@i7026.proto getAOType(01,1,$(s,undefined):$(ta,undefined):$(d,undefined):VOut1) $(A7026,undefined) 0")
+}
+
+record(longin, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:TypeNum") {
+   field(DESC, "Read channel type")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:TypeCalc1")
+   info(archive, "Scan, 00:00:10, VAL")
+}
+
+record(longin, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:SRNum") {
+   field(DESC, "Read channel slew rate")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:SRCalc1")
+   info(archive, "Scan, 00:00:10, VAL")
+}
+
+record(calc, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:TypeCalc1") {
+   field(INPA, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:TypeNum")
+   field(CALC, "A>-1&&A<6?A+1:7")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:TypeSeq1")
+}
+
+record(calc, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:SRCalc1") {
+   field(INPA, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:SRNum")
+   field(CALC, "A>0&&A<16?floor(A/2)+1:3")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:SRSeq1")
+}
+
+record(seq, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:SRSeq1") {
+   field(SELM, "Specified")
+   field(SELL, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:SRCalc1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:SRCalc21")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:SRCalc22")
+}
+
+record(calc, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:SRCalc21") {
+   field(INPA, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:SRNum")
+   field(CALC, "A%2")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:SRSeq21")
+}
+
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:SRSeq21") {
+   field(SELM, "Specified")
+   field(SELL, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:SRCalc21")
+   field(STR1, "Immediate")
+   field(STR2, "0.0625 V/s or 0.125 mA/s")
+   field(STR3, "0.125 V/s or 0.25 mA/s")
+   field(STR4, "0.25 V/s or 0.5 mA/s")
+   field(STR5, "0.5 V/s or 1.0 mA/s")
+   field(STR6, "1.0 V/s or 2.0 mA/s")
+   field(STR7, "2.0 V/s or 4.0 mA/s")
+   field(STR8, "4.0 V/s or 8.0 mA/s")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:SR PP")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:SR PP")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:SR PP")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:SR PP")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:SR PP")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:SR PP")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:SR PP")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:SR PP")
+}
+
+record(calc, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:SRCalc22") {
+   field(INPA, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:SRNum")
+   field(CALC, "A%2")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:SRSeq22")
+}
+
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:SRSeq22") {
+   field(SELM, "Specified")
+   field(SELL, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:SRCalc22")
+   field(STR1, "8.0 V/s or 16 mA/s")
+   field(STR2, "16 V/s or 32 mA/s")
+   field(STR3, "32 V/s or 64 mA/s")
+   field(STR4, "64 V/s or 128 mA/s")
+   field(STR5, "128 V/s or 256 mA/s")
+   field(STR6, "256 V/s or 512 mA/s")
+   field(STR7, "512 V/s or 1024 mA/s")
+   field(STR8, "1024 V/s or 2048 mA/s")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:SR PP")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:SR PP")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:SR PP")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:SR PP")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:SR PP")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:SR PP")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:SR PP")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:SR PP")
+}
+
+record(stringin, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:Type") {
+}
+
+record(stringin, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:SR") {
+}
+
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:TypeSeq1") {
+   field(SELM, "Specified")
+   field(SELL, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:TypeCalc1")
+   field(STR1, "0-20 mA")
+   field(STR2, "4-20 mA")
+   field(STR3, "0-10 V")
+   field(STR4, "+/-10 V")
+   field(STR5, "0-5 V")
+   field(STR6, "+/-5 V")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:Type PP")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:Type PP")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:Type PP")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:Type PP")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:Type PP")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:Type PP")
+}
+
+record(longout, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:TypeReq") {
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:EGUCalc1")
+   field(DOL, "3")
+   field(LOLO, "-1")
+   field(LLSV, "INVALID")
+   info(autosaveFields, "VAL")
+   info(archive, "Scan, 00:00:10, VAL")
+}
+
+record(longout, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:SRReq") {
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:SRSet")
+   field(DOL, "0")
+   field(LOLO, "-1")
+   field(LLSV, "INVALID")
+   info(autosaveFields, "VAL")
+   field(PINI, "YES")
+   info(archive, "Scan, 00:00:10, VAL")
+}
+
+record(calc, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:EGUCalc1") {
+   field(INPA, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:TypeReq")
+   field(CALC, "A>-1&&A<6?A+1:7")
+   field(FLNK, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:EGUSeq1")
+}
+
+record(seq, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:EGUSeq1") {
+   field(SELM, "Specified")
+   field(SELL, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:EGUCalc1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:set0to20mA.PROC PP")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:set4to20mA.PROC PP")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:set0to10V.PROC PP")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:setpm10V.PROC PP")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:set0to5V.PROC PP")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:setpm5V.PROC PP")
+}
+
+
+# set7026AOEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:set4to20mA") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1.DISA")
+   field(DO2, "4.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1.DRVL")
+   field(DO3, "20.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1.DRVH")
+   field(DO4, "4.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1.LOPR")
+   field(DO5, "20.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1.HOPR")
+   field(STR6, "mA")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:TypeSet PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1.DISA")
+}
+
+
+# set7026AOEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:set0to20mA") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1.DISA")
+   field(DO2, "0.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1.DRVL")
+   field(DO3, "20.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1.DRVH")
+   field(DO4, "0.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1.LOPR")
+   field(DO5, "20.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1.HOPR")
+   field(STR6, "mA")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:TypeSet PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1.DISA")
+}
+
+
+# set7026AOEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:setpm10V") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1.DISA")
+   field(DO2, "-10.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1.DRVL")
+   field(DO3, "10.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1.DRVH")
+   field(DO4, "-10.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1.LOPR")
+   field(DO5, "10.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1.HOPR")
+   field(STR6, "V")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:TypeSet PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1.DISA")
+}
+
+
+# set7026AOEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:setpm5V") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1.DISA")
+   field(DO2, "-5.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1.DRVL")
+   field(DO3, "5.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1.DRVH")
+   field(DO4, "-5.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1.LOPR")
+   field(DO5, "5.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1.HOPR")
+   field(STR6, "V")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:TypeSet PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1.DISA")
+}
+
+
+# set7026AOEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:set0to10V") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1.DISA")
+   field(DO2, "0.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1.DRVL")
+   field(DO3, "10.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1.DRVH")
+   field(DO4, "0.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1.LOPR")
+   field(DO5, "10.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1.HOPR")
+   field(STR6, "V")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:TypeSet PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1.DISA")
+}
+
+
+# set7026AOEGU.template
+record(sseq, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:set0to5V") {
+   field(DO1, "1")
+   field(LNK1, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1.DISA")
+   field(DO2, "0.0")
+   field(LNK2, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1.DRVL")
+   field(DO3, "5.0")
+   field(LNK3, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1.DRVH")
+   field(DO4, "0.0")
+   field(LNK4, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1.LOPR")
+   field(DO5, "5.0")
+   field(LNK5, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1.HOPR")
+   field(STR6, "V")
+   field(LNK6, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1.EGU")
+   field(LNK7, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1:TypeSet PP")
+   field(DO8, "0")
+   field(LNK8, "$(s,undefined):$(ta,undefined):$(d,undefined):VOut1.DISA")
+}
+
+
+# 7026Alarm.template
+#
+# This is for a possible implementation using only a 7026 module
+#
+record(calc, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn:Alarm") {
+   field(INPA, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn0:Alarm CPP")
+   field(INPB, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn1:Alarm CPP")
+   field(INPC, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn2:Alarm CPP")
+   field(INPD, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn3:Alarm CPP")
+   field(INPE, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn4:Alarm CPP")
+   field(INPF, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn5:Alarm CPP")
+   field(CALC, "max(A,B,C,D,E,F)>0.5")
+   field(HHSV, "MAJOR")
+   field(HIHI, "0.5")
+}
+
+record(calc, "$(s,undefined):$(ta,undefined):$(d,undefined):DIO:Alarm") {
+   field(INPA, "$(s,undefined):$(ta,undefined):$(d,undefined):DI0.SEVR CPP")
+   field(INPB, "$(s,undefined):$(ta,undefined):$(d,undefined):DI1.SEVR CPP")
+   field(INPC, "$(s,undefined):$(ta,undefined):$(d,undefined):DI2.SEVR CPP")
+   field(INPD, "$(s,undefined):$(ta,undefined):$(d,undefined):DO0:RBV.SEVR CPP")
+   field(INPE, "$(s,undefined):$(ta,undefined):$(d,undefined):DO1:RBV.SEVR CPP")
+   field(INPF, "$(s,undefined):$(ta,undefined):$(d,undefined):DO2:RBV.SEVR CPP")
+   field(CALC, "max(A,B,C,D,E,F)>0.5")
+   field(HHSV, "MAJOR")
+   field(HIHI, "0.5")
+}
+
+record(calc, "$(s,undefined):$(ta,undefined):$(d,undefined):Alarm") {
+   field(INPA, "$(s,undefined):$(ta,undefined):$(d,undefined):DIO:Alarm CPP")
+   field(INPC, "$(s,undefined):$(ta,undefined):$(d,undefined):VIn:Alarm CPP")
+   field(CALC, "max(A,B)>0.5")
+   field(HHSV, "MAJOR")
+   field(HIHI, "0.5")
+}

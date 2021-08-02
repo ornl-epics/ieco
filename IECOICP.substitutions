@@ -1,0 +1,22 @@
+file 7026StandAlone.db 
+{
+ {s=BL4A, ta=SE, d=IECO, A7026=ICP1 }
+}
+
+
+
+
+file Magnet.db
+{
+pattern {S, TA, DN, PORT, ADDR, BIT}
+        {BL4A, SE, IECO, ICP7065D, 01,DO0}
+}
+
+
+#Alarm bit from ICP
+#file Alarm.template
+#{
+#pattern {S, TA, DN, BIT}
+#        {BL4A, SE, IECO, DO0}
+#}
+
